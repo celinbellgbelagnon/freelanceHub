@@ -1,0 +1,126 @@
+/* Conteneur général */
+.container {
+  padding: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  max-width: 1100px;
+  margin: auto;
+  box-shadow: 0 4px 10px #1e1e2f;
+  position: relative;
+}
+
+/* Titre */
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+/* Bouton mode sombre/clair */
+.toggleButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #1e1e2f;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.toggleButton:hover {
+  background-color: #1e1e2f;
+}
+
+/* Tableaux */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid;
+}
+
+.table th {
+  background-color: #1e1e2f;
+  color: #fff;
+}
+
+/* Mode sombre */
+.dark {
+  background-color: #1e1e2f;
+  color: #fff;
+}
+
+.dark h2{
+  color: #fff;
+}
+
+.dark .table th{
+  background-color: #fff;
+  color: #070c13;
+  border: 1px solid #1e1e2f;
+}
+.dark .table td {
+  border: 1px solid #fff;
+}
+
+.dark .table td {
+  background-color: #1e1e2f;
+  color: #fff;
+}
+
+.dark .table tr:hover {
+  background-color: #1e1e2f;
+}
+
+.dark .toggleButton {
+  background-color: #fff;
+  color: #070c13;
+}
+
+.dark .toggleButton:hover {
+  background-color: #bbb;
+}
+
+/* Mode clair */
+.light {
+  background-color: #fff;
+  color: #1e1e2f;
+}
+
+.light .table th{
+  background-color: #1e1e2f;
+  color: #fff;
+  border: 1px solid #fff;
+}
+.light .table td {
+  border: 1px solid #1e1e2f;
+}
+
+.light .table td {
+  background-color: #fff;
+  color: #1e1e2f;
+}
+
+.light .table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.light .toggleButton {
+  background-color: #1e1e2f;
+  color: #fff;
+}
+
+.light .toggleButton:hover {
+  background-color: #1e1e2f;
+}

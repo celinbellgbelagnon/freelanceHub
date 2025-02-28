@@ -1,0 +1,56 @@
+/* Centrer la carte sur la page */
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+/* Style de la carte */
+.card {
+    max-width: 600px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Style du titre */
+h1 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+/* Style du texte */
+p {
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+/* Liste des conditions */
+.list {
+    text-align: left;
+    list-style: none;
+    padding: 0;
+}
+
+.list li {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #444;
+}
+
+.list strong {
+    color: #000;
+}
+
+/* Note en bas */
+.note {
+    font-size: 0.9rem;
+    margin-top: 20px;
+    color: #777;
+}

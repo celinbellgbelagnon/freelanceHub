@@ -1,0 +1,94 @@
+/* Conteneur principal */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Contenu centré */
+.content {
+  background: #f9f9f9;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.content:hover {
+  transform: translateY(-5px);
+}
+
+/* Titre principal */
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.title span {
+  color: #1e1e2f; /* Orange */
+}
+
+/* Sous-titre */
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+/* Section des mentions légales */
+.legal {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.legal h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #1e1e2f;
+}
+
+.legal p {
+  font-size: 1rem;
+  color: #444;
+}
+
+/* Liens */
+.link {
+  color: #1e1e2f;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #1e1e2f;
+}
+
+/* Bouton interactif */
+.button {
+  display: inline-block;
+  background-color: #1e1e2f;
+  color: #fff;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #1e1e2f;
+  transform: scale(1.05);
+}

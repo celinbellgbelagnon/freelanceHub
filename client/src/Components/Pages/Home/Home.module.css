@@ -1,0 +1,90 @@
+
+/* Conteneur principal */
+.container {
+  font-family: Arial, sans-serif;
+  color: #1e1e2f;
+  padding: 20px;
+  text-align: center;
+}
+
+/* En-tête */
+.header {
+  position: relative;
+  background: url('../../../Assets/freelance1.jpg') no-repeat center/cover;
+  padding: 100px 20px;
+  color: #fff;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Overlay sombre */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 15px;
+}
+
+.header h1 {
+  position: relative;
+  z-index: 2;
+  font-size: 3.5rem;
+  color: #fff;
+}
+
+/* Sections générales */
+.about, .benefits, .cta {
+  margin: 50px 0;
+  padding: 20px;
+}
+
+/* Grille des avantages */
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Cartes des avantages */
+.card {
+  background: linear-gradient(135deg, #070c13, #1e1e2f);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px #1e1e2f;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* CTA */
+.cta {
+  background: #070c13;
+  color: #fff;
+  padding: 40px 20px;
+  border-radius: 15px;
+}
+
+.button {
+  background: #ff9800;
+  color: #fff;
+  padding: 15px 30px;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.button:hover {
+  background: #e68900;
+}
