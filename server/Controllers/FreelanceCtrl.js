@@ -54,7 +54,7 @@ exports.loginfreelance = (req, res)=>{
                     }
                 })
                 .catch((error) =>{
-                    res,status(501).json({ error: "erreur de comparaison", details: error.message });
+                    res.status(501).json({ error: "erreur de comparaison", details: error.message });
                 });
         } else{
             res.status(404).json({ error: "Freelance not found"});    
