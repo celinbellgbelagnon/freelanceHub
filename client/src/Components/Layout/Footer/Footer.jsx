@@ -1,56 +1,56 @@
-import React from "react";
-import styles from "./Footer.module.css";
-import {  FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaFacebookF, FaTwitter, FaYoutube, FaLinkedinIn } from "react-icons/fa";
+import React from 'react';
+import styles from './Footer.module.css';
+import { FaFacebook, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
-        {/* Quick Links */}
-        <div className={styles.section}>
-          <h3>Quick Links</h3>
-          <ul>
-            <li>About Us</li>
-            <li>Contact Us</li>
-            <li>Privacy Policy</li>
-            <li>Terms & Conditions</li>
-            <li>FAQs & Help</li>
-          </ul>
+        <div className={styles.logoSection}>
+          <h1 className={styles.logo}>Freelance<span>Hub</span></h1>
+          <p className={styles.tagline}>Mettez en relation les meilleurs talents avec les meilleurs projets.</p>
         </div>
 
-        {/* Contact */}
-        <div className={styles.section}>
-          <h3>Contact</h3>
-          <p><FaMapMarkerAlt /> 123 Street, New York, USA</p>
-          <p><FaPhoneAlt /> +012 345 67890</p>
-          <p><FaEnvelope /> info@example.com</p>
+        <div className={styles.linksSection}>
+          <div>
+            <h4>Freelancers</h4>
+            <ul>
+              <li>Créer un profil</li>
+              <li>Parcourir les offres</li>
+              <li>Mes contrats</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Clients</h4>
+            <ul>
+              <li>Poster un projet</li>
+              <li>Parcourir les freelances</li>
+              <li>Mes commandes</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Support</h4>
+            <ul>
+              <li>FAQ</li>
+              <li>Contact</li>
+              <li>Conditions</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className={styles.socialSection}>
+          <h4>Suivez-nous</h4>
           <div className={styles.socialIcons}>
-            <FaFacebookF className={styles.icon} />
-            <FaTwitter className={styles.icon} />
-            <FaYoutube className={styles.icon} />
-            <FaLinkedinIn className={styles.icon} />
+            <FaFacebook />
+            <FaTwitter />
+            <FaLinkedin />
+            <FaGithub />
           </div>
         </div>
+      </div>
 
-        {/* Gallery */}
-        <div className={styles.section}>
-          <h3>Gallery</h3>
-          <div className={styles.gallery}>
-            {[...Array(6)].map((_, index) => (
-              <img key={index} src={`https://source.unsplash.com/50x50/?office,work,meeting&random=${index}`} alt={`gallery${index + 1}`} />
-            ))}
-          </div>
-        </div>
-
-        {/* Newsletter */}
-        <div className={styles.section}>
-          <h3>Newsletter</h3>
-          <p>Subscribe to our newsletter for the latest updates.</p>
-          <div className={styles.newsletter}>
-            <input type="email" placeholder="Your email" />
-            <button>Sign Up</button>
-          </div>
-        </div>
+      <div className={styles.bottomBar}>
+        <p>&copy; {new Date().getFullYear()} FreelanceConnect. Tous droits réservés.</p>
       </div>
     </footer>
   );

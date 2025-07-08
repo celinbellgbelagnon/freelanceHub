@@ -1,5 +1,5 @@
 
-/* Conteneur principal */
+/* Conteneur principal 
 .container {
   font-family: Arial, sans-serif;
   color: #1e1e2f;
@@ -7,7 +7,7 @@
   text-align: center;
 }
 
-/* En-tête */
+
 .header {
   position: relative;
   background: url('../../../Assets/freelance1.jpg') no-repeat center/cover;
@@ -19,7 +19,7 @@
   align-items: center;
 }
 
-/* Overlay sombre */
+
 .overlay {
   position: absolute;
   top: 0;
@@ -37,13 +37,13 @@
   color: #fff;
 }
 
-/* Sections générales */
+
 .about, .benefits, .cta {
   margin: 50px 0;
   padding: 20px;
 }
 
-/* Grille des avantages */
+
 .benefitsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -51,7 +51,7 @@
   margin-top: 20px;
 }
 
-/* Cartes des avantages */
+
 .card {
   background: linear-gradient(135deg, #070c13, #1e1e2f);
   color: white;
@@ -66,7 +66,7 @@
   transform: scale(1.05);
 }
 
-/* CTA */
+
 .cta {
   background: #070c13;
   color: #fff;
@@ -88,3 +88,4 @@
 .button:hover {
   background: #e68900;
 }
+*/

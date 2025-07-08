@@ -1,42 +1,70 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { FaUserTie, FaBriefcase, FaHome, FaCogs, FaInfoCircle } from "react-icons/fa";
 import styles from "./Navbar.module.css";
-import { FaUserTie, FaBriefcase, /* FaSignInAlt, */ FaUserPlus } from "react-icons/fa";
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [username, setUsername] = useState("");
+  const location = useLocation();
+
+  useEffect(() => {
+    const name = localStorage.getItem("name");
+    if (name) setUsername(name);
+  }, []);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  // Affiche le username freelance sur /projectList, "client" sur /projetListClient, sinon "Se connecter"
+  let showUsername = "Se connecter";
+  if (location.pathname.includes("/projectList") && username) {
+    showUsername = username;
+  } else if (location.pathname.includes("/projetListClient")) {
+    showUsername = "client";
+  }
+
   return (
     <div>
-        <nav className={styles.navbar}>
-      <div className={styles.logo}>
-        <Link to="/">FreelanceHub</Link>
-      </div>
-      <ul className={styles.navLinks}>
-        <li>
-          <Link to="/login">
-            <FaUserTie className={styles.icon} /> Freelancers
+      <header className={styles.navbar}>
+        <div className={styles.logo}>
+          <span></span>
+          <span className={styles.blue}>freelance</span>
+          <span className={styles.bold}>Hub</span>
+        </div>
+
+        <div className={styles.hamburger} onClick={toggleMenu}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <nav className={`${styles.links} ${menuOpen ? styles.active : ""}`}>
+          <Link to="/" onClick={() => setMenuOpen(false)}>
+            <FaHome className={styles.icon} /> Acceuil
           </Link>
-        </li>
-        <li>
-          <Link to="/bienvenue">
-            <FaBriefcase className={styles.icon} /> Clients
+          <Link to="/services" onClick={() => setMenuOpen(false)}>
+            <FaCogs className={styles.icon} /> Services
           </Link>
-        </li>
-        {/* <li>
-          <Link to="/login">
-            <FaSignInAlt className={styles.icon} /> Connexion
+          <Link to="/About" onClick={() => setMenuOpen(false)}>
+            <FaInfoCircle className={styles.icon} /> À propos
           </Link>
-        </li> */}
-        <li>
-          <Link to="/optionconnect">
-            <FaUserPlus className={styles.icon} /> Inscription
-          </Link>
-        </li>
-      </ul>
-      
         </nav>
-        <Outlet/>
+
+        <div className={styles.actions}>
+          <button className={styles.connexion}>
+            <Link to="/bienvenue" className={styles.link}>
+              <FaUserTie className={styles.icon2} />{" "}
+              {showUsername}
+            </Link>
+          </button>
+          <div className={styles.lang}>
+            <img src="https://flagcdn.com/tg.svg" alt="FR" />
+          </div>
+        </div>
+      </header>
+
+      <Outlet />
     </div>
-    
   );
 };
 

@@ -1,0 +1,137 @@
+.container {
+  padding: 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Mode clair */
+.light {
+  background-color: #ffffff;
+  color: #001dc0;
+}
+
+/* Mode sombre */
+.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.toggleButton {
+  background-color: #001dc0;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dark .toggleButton {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #fff;
+}
+
+
+/* Bouton Ajouter Projet */
+.addButton {
+  background-color: #001dc0;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  float: right;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ccc;
+  padding: 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.light .table th {
+  background-color: #f4f4f4;
+  color: #001dc0;
+}
+
+.dark .table th {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.dark .table tr:nth-child(even) {
+  background-color: #1a1a1a;
+}
+
+.erreur {
+  color: red;
+  margin-top: 1rem;
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    padding: 0.8rem;
+  }
+
+  .table td {
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    width: 45%;
+    text-align: left;
+    font-weight: bold;
+    color: #888;
+  }
+
+  .addButton {
+    float: none;
+    display: block;
+    margin: 1rem auto;
+  }
+}

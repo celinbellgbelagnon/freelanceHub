@@ -15,9 +15,7 @@ CREATE TABLE IF NOT EXISTS `freelance` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `freelance` (`id_freelance`, `username`, `email`, `password_freelance`, `telephone`, `specialite`, `date_inscription`) VALUES
-(1, 'koffi', 'koffi@gmail.com', '$2b$05$nx3hRz.Vn25UA0Xv/rZ8WeLB1jbqb.mwjqiBxfYLUFBTX5/bRY3aS', '6756345', 'dev web', '2025-02-26 20:21:00'),
-(2, 'kodjo', 'kodjo@dd.fr', '$2b$05$4I90.8wCncB2cJdq8WO/YuN36ADh3uCOM3P4rdzWWpg1EoMXg3WWC', '364658', 'data', '2025-02-26 20:23:00');
+
 
 DROP TABLE IF EXISTS `projet_sub`;
 CREATE TABLE IF NOT EXISTS `projet_sub` (

@@ -1,109 +1,113 @@
 .footer {
-  background-color: #1e1e2f;
-  color: white;
-  padding: 30px 0;
-  width: 100%;
-  margin-left: -100px;
-  padding-left: 120px;
-  margin-bottom: -40px;
+  background-color: #001dc0;
+  color: #fff;
+  padding: 40px 20px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
   display: flex;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: auto;
   flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.section {
-  flex: 1;
-  min-width: 220px;
-  margin: 10px;
+.logoSection {
+  flex: 1 1 250px;
 }
 
-h3 {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
-  text-align: left;
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
-ul {
+.logo span {
+  color: #fff;
+  background: #000;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.tagline {
+  font-size: 0.95rem;
+  color: #e0e0e0;
+}
+
+.linksSection {
+  display: flex;
+  gap: 40px;
+  flex: 2 1 400px;
+}
+
+.linksSection div h4 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.linksSection ul {
   list-style: none;
   padding: 0;
-  text-align: left;
+  margin: 0;
 }
 
-li {
-  margin: 5px 0;
+.linksSection ul li {
+  margin-bottom: 8px;
   cursor: pointer;
-  transition: color 0.3s ease;
+  font-size: 0.9rem;
 }
 
-li:hover {
-  color: #00c8ff;
+.linksSection ul li:hover {
+  text-decoration: underline;
 }
 
-.section p {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 5px 0;
-  color: #fff;
+.socialSection {
+  flex: 1 1 180px;
+}
+
+.socialSection h4 {
+  margin-bottom: 10px;
 }
 
 .socialIcons {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 15px;
+  font-size: 1.2rem;
+  color: #fff;
 }
 
-.icon {
-  font-size: 20px;
-  cursor: pointer;
-  transition: transform 0.3s ease, color 0.3s ease;
+.socialIcons :hover {
+  color: #f1c40f;
 }
 
-.icon:hover {
-  transform: scale(1.2);
-  color: #00c8ff;
+.bottomBar {
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ccc;
 }
 
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
+/* 🌙 Dark mode support */
+.dark .footer {
+  background-color: #0a0a0a;
+  color: #e6e6e6;
 }
 
-.gallery img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 5px;
+.dark .footer .logo span {
+  background-color: #fff;
+  color: #001dc0;
 }
 
-.newsletter {
-  display: flex;
-  margin-top: 10px;
+.dark .footer .socialIcons {
+  color: #e6e6e6;
 }
 
-.newsletter input {
-  flex: 1;
-  padding: 8px;
-  border: none;
-  border-radius: 5px 0 0 5px;
-}
-
-.newsletter button {
-  background: #00c8ff;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.newsletter button:hover {
-  background: #008ecf;
+.dark .footer .bottomBar {
+  color: #999;
 }

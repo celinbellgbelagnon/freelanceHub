@@ -1,142 +1,156 @@
 import { Link } from "react-router-dom";
-import styles from "../Login/Auth.module.css";
-import { useState } from "react";
-import axios from 'axios'
+import React, { useState } from "react";
+import styles from "./Signup.module.css";
+import axios from 'axios';
 
 const Signup = () => {
-  let [username, setUserName] = useState('');
-  let [email, setEmail] = useState('');
-  let [password, setPassword] = useState('');
-  let [confirmPassword, setConfirmPassword] = useState('');
-  let [telephone, setTelephone] = useState('');
-  let [specialite, setSpecialite] = useState('');
-  let [date, setDate] = useState('');
+  const [username, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [telephone, setTelephone] = useState('');
+  const [specialite, setSpecialite] = useState('');
+  const [date, setDate] = useState('');
+  const [profil, setProfil] = useState('freelance');
+  const [cvFile, setCvFile] = useState(null);
 
-  let today = new Date();
-    let todayString = today.toISOString().slice(0, 16);
+  const today = new Date();
+  const todayString = today.toISOString().slice(0, 10);
 
-  const handlesubmit = (e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      alert('Les mots de passe ne correspondent pas.');
       return;
     }
-    console.log('name:', username);
-    console.log('email:', email);
-    console.log('password:', password);
-    console.log('telephone:', telephone);
-    console.log('specialite:', specialite);
-    console.log('date:', date);
 
-    let signupInfo = {
-      username: username,
-      email: email,
-      password: password,
-      telephone: telephone,
-      specialite: specialite,
-      date: date
+    if (!username || !email || !password || !profil || !date) {
+      alert("Veuillez remplir tous les champs obligatoires.");
+      return;
     }
-    console.log(signupInfo);
 
-    axios.post('http://localhost:5000/freelace/signup', signupInfo)
-    .then((response)=> {
-      console.log(response.data);
-      window.location.href ="/Login";
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('telephone', telephone);
+    formData.append('specialite', specialite);
+    formData.append('date', date);
+    formData.append('profil', profil);
+    if (cvFile) formData.append('cv_pdf', cvFile);
+
+    axios.post('http://localhost:5000/freelace/signup', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
     })
-    .catch((error)=>{
-      console.log(error);
-      alert(error.response?.data?.error || "Erreur inconue");
+    .then(() => {
+      window.location.href = "/login";
     })
-
-  }
-
-  
+    .catch((error) => {
+      alert(error.response?.data?.error || "Erreur lors de l'inscription.");
+      console.error(error.response?.data);
+    });
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.loginBox}>
-        <form className={styles.left} onSubmit={handlesubmit}>
-          <h2>Create Account</h2>
-          <p className={styles.p2}>Use your email for registration</p>
+        <form
+          className={styles.left}
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+        >
+          <h2>Créer un compte</h2>
+          <p className={styles.p2}>Utilisez votre e-mail pour vous inscrire</p>
           <div className={styles.inputbox}>
             <div className={styles.leftbox}>
-            <input
-              type="text"
-              placeholder="username"
-              name="nom"
-              value={username}
-              onChange={(e)=>setUserName(e.target.value)}
-              className={styles.input}
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              value={email}
-              onChange={(e)=>setEmail(e.target.value)}
-              className={styles.input}
-            />
-            <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={(e)=>setPassword(e.target.value)}
-            className={styles.input}
-            />
+              <input
+                type="text"
+                placeholder="Nom d'utilisateur"
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
+                className={styles.input}
+              />
+              <input
+                type="email"
+                placeholder="E-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={styles.input}
+              />
+              <input
+                type="password"
+                placeholder="Mot de passe"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={styles.input}
+              />
+              <input
+                type="password"
+                placeholder="Confirmer le mot de passe"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className={styles.input}
+              />
+              <input
+                type="tel"
+                placeholder="Téléphone"
+                value={telephone}
+                onChange={(e) => setTelephone(e.target.value)}
+                className={styles.input}
+              />
             </div>
             <div className={styles.rightbox}>
-            <input
-            type="password"
-            placeholder="Confirm Password"
-            name="password"
-            value={confirmPassword}
-            onChange={(e)=>setConfirmPassword(e.target.value)}
-            className={styles.input}
-          />
-          <input
-            type="number"
-            placeholder="Phone Number"
-            name="Phone Number"
-            value={telephone}
-            onChange={(e)=>setTelephone(e.target.value)}
-            className={styles.input}
-            />
-            <input
-            type="text"
-            placeholder="Speciality"
-            name="speciality"
-            value={specialite}
-            onChange={(e)=>setSpecialite(e.target.value)}
-            className={styles.input}
-          />
-          <input
-            type="datetime-local"
-            placeholder="Date of signup"
-            name="date"
-            value={date}
-            onChange={(e)=>setDate(e.target.value)}
-            className={styles.input}
-            min={todayString}
-          />
+              <input
+                type="text"
+                placeholder="Spécialité"
+                value={specialite}
+                onChange={(e) => setSpecialite(e.target.value)}
+                className={styles.input}
+              />
+              <input
+                type="date"
+                placeholder="Date d'inscription"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className={styles.input}
+                max={todayString}
+              />
+              <select
+                value={profil}
+                onChange={(e) => setProfil(e.target.value)}
+                className={styles.input}
+                required
+              >
+                <option value="freelance">Freelance</option>
+                <option value="client">Client</option>
+              </select>
+              <label className={styles.label}>
+                Téléversez votre CV (PDF uniquement)
+              </label>
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={(e) => setCvFile(e.target.files[0])}
+                className={styles.input}
+                required={profil === "freelance"}
+              />
             </div>
-            
-          
-          
-          
-          
-          
-
-        </div>  
-
-          <button className={styles.button}>SIGN UP</button>
+          </div>
+          <button type="submit" className={styles.button}>
+            S'inscrire
+          </button>
         </form>
-        <div className={styles.right}>
-          <h2 className={styles.welcome}>Welcome Back!</h2>
-          <p>To keep connected with us, please login with your details</p>
-          <Link to="/login" className={styles.button2}>SIGN IN</Link>
-        </div>
+
+        <p
+          className={styles.footnote}
+          
+        >
+          Avez-vous déjà un compte ?{" "}
+          <Link to="/login" className={styles.link}>
+            Connectez-vous
+          </Link>
+        </p>
       </div>
     </div>
   );

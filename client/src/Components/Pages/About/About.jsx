@@ -11,44 +11,23 @@ const About = () => {
   }, []);
 
   return (
-    <section className={styles.aboutSection} data-aos="fade-up">
-      <div className={styles.container}>
-        {/* Image Section */}
-        <div className={styles.imageContainer} data-aos="fade-right">
-          <img src={aboutImage} alt="About Us" className={styles.image} />
+    <section className={styles.home}>
+      <div className={styles.left} data-aos="fade-right">
+        <p className={styles.subTitle}>
+          SOURCING, PORTAGE SALARIAL ET COMMERCIAL, CONFORMITÉ
+        </p>
+        <h1>
+          Talent as a service : nous connectons<br />
+          les grandes entreprises avec les<br />
+          meilleurs talents
+        </h1>
+        <div className={styles.buttons}>
+          <button className={styles.modelBtn}>NOTRE MODÈLE</button>
+          <button className={styles.contactBtn}>NOUS CONTACTER</button>
         </div>
-
-        {/* Text Content */}
-        <div className={styles.textContainer} data-aos="fade-left">
-          <h5 className={styles.subtitle}>ABOUT US</h5>
-          <h2 className={styles.title}>Discover Freelance Hub</h2>
-          <p className={styles.description}>
-            Freelance Hub is a platform dedicated to connecting skilled freelancers with businesses 
-            looking for top-quality services. We provide a secure environment where professionals 
-            and clients can collaborate efficiently.
-          </p>
-          <p className={styles.description}>
-            Our mission is to simplify remote work by offering powerful tools, an active community, 
-            and a trusted space for professional interactions. Join us and grow your career with confidence!
-          </p>
-
-          {/* Key Features */}
-          <div className={styles.features} data-aos="zoom-in">
-            <ul>
-              <li>✔ Secure platform</li>
-              <li>✔ Guaranteed payments</li>
-              <li>✔ Access to international clients</li>
-            </ul>
-            <ul>
-              <li>✔ Large freelancer network</li>
-              <li>✔ Advanced project management tools</li>
-              <li>✔ Responsive customer support</li>
-            </ul>
-          </div>
-
-          {/* Button */}
-          <button className={styles.readMore} data-aos="fade-up">Read More</button>
-        </div>
+      </div>
+      <div className={styles.right} data-aos="fade-left">
+        <button className={styles.contactFloat}>CONTACTEZ-NOUS</button>
       </div>
     </section>
   );

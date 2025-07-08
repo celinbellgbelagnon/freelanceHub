@@ -1,39 +1,42 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./Auth.module.css";
+import styles from "./Login.module.css";
 import axios from "axios";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // Ajout de l'état pour l'erreur
-  const [loading, setLoading] = useState(false); // Ajout de l'état pour le chargement
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Gérer l'envoi du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true); // Démarrer le chargement
+    setLoading(true);
+    setError("");
 
-    // Préparer les données à envoyer
     const loginData = {
       nom: username,
       password: password,
     };
 
-    // Envoi de la requête
     axios
       .post("http://localhost:5000/freelace/login", loginData)
       .then((response) => {
-        setLoading(false); // Arrêter le chargement
-        console.log(response.data);
-        window.localStorage.setItem("token", response.data.accessToken);
+        setLoading(false);
+        localStorage.setItem("token", response.data.accessToken);
         localStorage.setItem("name", username);
-        window.location.href = "/projectList"; // Rediriger vers une autre page
+
+        if (username.trim().toLowerCase() === "freelance") {
+          window.location.href = "/projectList";
+        } else if (username.trim().toLowerCase() === "client") {
+          window.location.href = "/projetListClient";
+        } else {
+          window.location.href = "/";
+        }
       })
       .catch((error) => {
-        setLoading(false); // Arrêter le chargement en cas d'erreur
-        console.log(error);
-        setError("Nom d'utilisateur ou mot de passe incorrect"); // Afficher une erreur
+        setLoading(false);
+        setError(error.response?.data?.error || "Nom d'utilisateur ou mot de passe incorrect.");
       });
   };
 
@@ -41,37 +44,37 @@ const Login = () => {
     <div className={styles.container}>
       <div className={styles.loginBox}>
         <form className={styles.left} onSubmit={handleSubmit}>
-          <h2>Login</h2>
-          <p>Or use your name & password</p>
+          <h2>Connexion</h2>
+          <p>Utilisez votre nom d'utilisateur et votre mot de passe</p>
 
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Nom d'utilisateur"
             className={styles.input}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Mot de passe"
             className={styles.input}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          
-          {error && <p className={styles.error}>{error}</p>} {/* Affichage d'erreurs */}
+
+          {error && <p className={styles.error}>{error}</p>}
 
           <button className={styles.button} type="submit" disabled={loading}>
-            {loading ? "Loading..." : "SIGN IN"}
+            {loading ? "Chargement..." : "SE CONNECTER"}
           </button>
         </form>
-        <div className={styles.right}>
-          <h2 className={styles.welcome}>Hello, Friend!</h2>
-          <p>Register with your personal details to use all of the site features</p>
-          <Link to="/signup" className={styles.button2}>
-            SIGN UP
+
+        <p className={styles.textBottom}>
+          Vous n'avez pas encore de compte ?{" "}
+          <Link to="/signup" className={styles.link}>
+            Inscrivez-vous
           </Link>
-        </div>
+        </p>
       </div>
     </div>
   );

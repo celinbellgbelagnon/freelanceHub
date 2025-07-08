@@ -1,91 +1,97 @@
-.aboutSection {
-    padding: 80px 0;
-    background-color: #f8f9fa;
-  }
-  
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 50px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .imageContainer {
-    flex: 1;
-  }
-  
-  .image {
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px #070c13;
-  }
-  
-  .textContainer {
-    flex: 1;
-  }
-  
-  .subtitle {
-    color: #070c13;
-    font-size: 36px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-  }
-  
-  .title {
-    font-size: 32px;
-    font-weight: bold;
-    color: #070c13;
-    margin-bottom: 20px;
-  }
-  
-  .description {
-    font-size: 16px;
-    color: #070c13;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    text-align: left;
-    border-radius: 10px;
-  }
+.home {
+  display: flex;
+  padding: 40px;
+  padding-bottom: 150px;
+  margin-left: -20px;
+  margin-right: -20px;
+  width: 1286px;
+  background: #f5f7fa;
+  font-family: sans-serif;
+  background-image: url('../../../Assets/meilleurs-sites-freelances-740x416.jpg');
+  background-size: cover;
+  background-position: center;
+}
 
-  .description:hover{
-    background-color: #070c13;
-    color: #f8f9fa;
-    padding: 10px;
-  }
-  
-  .features {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .features ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .features li {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 8px;
-    text-align: left;
-  }
-  
-  .readMore {
-    background-color: #070c13;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-    margin-top: 20px;
-  }
-  
-  .readMore:hover {
-    background-color: #070c13;
-  }
-  
+.left {
+  max-width: 55%;
+}
+
+.subTitle {
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 30px;
+  color: #fff;
+  border: 1px solid #001dc0;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(0, 29, 192, 0.8);
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.modelBtn {
+  background: #001dc0;
+  color: #fff;
+  padding: 14px 24px;
+  border-radius: 30px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modelBtn:hover {
+  background: #fff;
+  color: #001dc0;
+  border: 2px solid #001dc0;
+  transform: scale(1);
+}
+
+.contactBtn {
+  background: #fff;
+  border: 2px solid #001dc0;
+  color: #001dc0;
+  padding: 14px 24px;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.contactBtn:hover {
+  background: #001dc0;
+  color: #fff;
+  border: none;
+  transform: scale(1);
+}
+
+.right {
+  position: relative;
+}
+
+.right img {
+  max-width: 400px;
+  border-radius: 10px;
+}
+
+.contactFloat {
+  position: absolute;
+  top: 20px;
+  right: -40px;
+  background: #00b569;
+  color: white;
+  padding: 14px 24px;
+  border-radius: 30px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}

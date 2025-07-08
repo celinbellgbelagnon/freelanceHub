@@ -1,126 +1,172 @@
-/* Conteneur général */
 .container {
-  padding: 30px;
-  font-family: Arial, Helvetica, sans-serif;
-  max-width: 1100px;
-  margin: auto;
-  box-shadow: 0 4px 10px #1e1e2f;
-  position: relative;
+  padding: 2rem;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Titre */
-h2 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 700;
+.light {
+  background-color: #f4f7fa;
+  color: #001a40;
 }
 
-/* Bouton mode sombre/clair */
+.dark {
+  background-color: #1e1e2f;
+  color: #ffffff;
+}
+
 .toggleButton {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: #1e1e2f;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
 }
 
-.toggleButton:hover {
-  background-color: #1e1e2f;
+
+h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  border-left: 4px solid #001dc0;
+  padding-left: 10px;
 }
 
-/* Tableaux */
 .table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  color: #001a40;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.table th, .table td {
-  padding: 12px 15px;
+.dark .table {
+  background-color: #2e2e3e;
+  color: #fff;
+}
+
+.table th,
+.table td {
+  padding: 1rem;
   text-align: left;
-  border: 1px solid;
+  border-bottom: 1px solid #ddd;
+}
+
+.dark .table th,
+.dark .table td {
+  border-bottom: 1px solid #444;
 }
 
 .table th {
-  background-color: #1e1e2f;
+  background-color: #001dc0;
   color: #fff;
+  font-weight: 600;
 }
 
-/* Mode sombre */
-.dark {
-  background-color: #1e1e2f;
+.interetButton {
+  background-color: #001dc0;
   color: #fff;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.dark h2{
-  color: #fff;
+.interetButton:hover {
+  background-color: #000f99;
 }
 
-.dark .table th{
-  background-color: #fff;
-  color: #070c13;
-  border: 1px solid #1e1e2f;
-}
-.dark .table td {
-  border: 1px solid #fff;
+.erreur {
+  color: #e74c3c;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 1rem;
 }
 
-.dark .table td {
-  background-color: #1e1e2f;
-  color: #fff;
-}
-
-.dark .table tr:hover {
-  background-color: #1e1e2f;
-}
-
+/* Mode sombre : bouton clair */
 .dark .toggleButton {
   background-color: #fff;
-  color: #070c13;
-}
-
-.dark .toggleButton:hover {
-  background-color: #bbb;
-}
-
-/* Mode clair */
-.light {
-  background-color: #fff;
-  color: #1e1e2f;
-}
-
-.light .table th{
-  background-color: #1e1e2f;
-  color: #fff;
+  color: #000;
   border: 1px solid #fff;
 }
-.light .table td {
-  border: 1px solid #1e1e2f;
+
+/* === Titre principal === */
+h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  border-left: 4px solid #001dc0;
+  padding-left: 10px;
+  color: #001a40;
 }
 
-.light .table td {
-  background-color: #fff;
-  color: #1e1e2f;
+.dark h2 {
+  color: #ffffff; /* Titre en blanc dans le mode sombre */
 }
 
-.light .table tr:hover {
-  background-color: #f1f1f1;
+/* ========== RESPONSIVE DESIGN ========== */
+
+/* Tablette */
+@media screen and (max-width: 1024px) {
+  .table th,
+  .table td {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
 }
 
-.light .toggleButton {
-  background-color: #1e1e2f;
-  color: #fff;
-}
+/* Mobile - Affichage en blocs empilés */
+@media screen and (max-width: 768px) {
+  .table,
+  .table thead,
+  .table tbody,
+  .table th,
+  .table td,
+  .table tr {
+    display: block;
+  }
 
-.light .toggleButton:hover {
-  background-color: #1e1e2f;
+  .table tr {
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #ccc;
+    padding: 1rem;
+    background-color: #fff;
+  }
+
+  .dark .table tr {
+    background-color: #2e2e3e;
+  }
+
+  .table th {
+    display: none;
+  }
+
+  .table td {
+    position: relative;
+    padding-left: 50%;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  .table td::before {
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    width: 45%;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #001dc0;
+    content: attr(data-label);
+  }
+
+  .interetButton {
+    width: 100%;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+  }
 }

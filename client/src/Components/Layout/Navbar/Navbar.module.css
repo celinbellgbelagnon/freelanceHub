@@ -1,47 +1,159 @@
 .navbar {
-    display: flex;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-family: 'Arial', sans-serif;
+  font-size: 1.8rem;
+  line-height: 1.2;
+  color: #222;
+  user-select: none;
+}
+
+.logo span {
+  display: block;
+}
+
+.blue {
+  color: #007bff;
+  font-weight: 600;
+}
+
+.bold {
+  font-weight: 700;
+  font-size: 2rem;
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+  font-size: 1rem;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+
+.links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.links a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.icon {
+  font-size: 1.1rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.connexion {
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.connexion:hover {
+  background-color: #0056b3;
+}
+
+.connexion .link {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon2 {
+  font-size: 1.3rem;
+}
+
+.lang img {
+  width: 28px;
+  height: auto;
+  cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  transition: transform 0.3s ease;
+}
+
+.lang img:hover {
+  transform: scale(1.1);
+}
+
+/* RESPONSIVITÉ */
+
+@media (max-width: 768px) {
+  .navbar {
     justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: #1e1e2f;
-    color: white;
-    margin: 13px;
-    border-radius: 10px;
   }
-  
-  .logo a {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
+  .links {
+    order: 3;
+    width: 100%;
+    flex-direction: column;
+    display: none; /* on cache par défaut */
+    margin-top: 10px;
   }
-  
-  .navLinks {
+  .links.active {
     display: flex;
-    list-style: none;
-    gap: 20px;
   }
-  
-  .navLinks li {
+  .actions {
+    order: 2;
+  }
+  .logo {
+    order: 1;
+  }
+}
+
+/* MENU HAMBURGER (optionnel) */
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  width: 28px;
+  height: 22px;
+  justify-content: space-between;
+}
+
+.hamburger span {
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+}
+
+/* afficher hamburger uniquement sur mobile */
+@media (max-width: 768px) {
+  .hamburger {
     display: flex;
-    align-items: center;
   }
-  
-  .navLinks a {
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: color 0.3s ease;
-  }
-  
-  .navLinks a:hover {
-    color: #f4a261;
-  }
-  
-  .icon {
-    font-size: 1.2rem;
-  }
-  
+}

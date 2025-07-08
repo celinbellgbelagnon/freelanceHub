@@ -19,6 +19,8 @@ const freelancers = [
   { id: 6, name: "Daniel Garcia", skill: "Ingenieur reseau", image: freelancer6 }
 ];
 
+
+
 const Freelance = () => {
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
