@@ -4,10 +4,10 @@ import styles from "./ProjetRegister.module.css";
 import { Sun } from "lucide-react"; // Icône de soleil
 import axios from "axios";
 
-const EnregistrerProjet = () => {
+const ProjetRegister = () => {
   const [clientNom, setClientNom] = useState('');
   const [clientEmail, setClientEmail] = useState('');
-  const [clientNumero, setClientNumero] = useState('');
+  const [clientNumero, setClientNumero] = useState('+22890112233');
   const [titreProjet, setTitreProjet] = useState('');
   const [descriptionProjet, setDescriptionProjet] = useState('');
   const [budget, setBudget] = useState('');
@@ -21,45 +21,49 @@ const EnregistrerProjet = () => {
   const todayString = new Date().toISOString().slice(0, 10);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!clientNom || !clientEmail || !clientNumero || !titreProjet || !descriptionProjet || !budget || !dateSoumission) {
-      setErreur("Tous les champs obligatoires doivent être remplis !");
-      return;
-    }
+  e.preventDefault();
+  if (!clientNom || !clientEmail || !clientNumero || !titreProjet || !descriptionProjet || !budget || !dateSoumission) {
+    setErreur("Tous les champs obligatoires doivent être remplis !");
+    return;
+  }
 
-    setErreur('');
+  setErreur('');
 
-    const projetSub = {
-      clientNom,
-      clientEmail,
-      clientNumero,
-      titreProjet,
-      descriptionProjet,
-      budget,
-      dateSoumission
-    };
+  const userId = localStorage.getItem("userId");
 
-    axios.post('http://localhost:5000/projet/update/add', projetSub)
-      .then(() => {
-        setConfirmationMessage('Projet enregistré avec succès !');
-        setShowConfirmation(true);
-
-        // Réinitialisation
-        setClientNom('');
-        setClientEmail('');
-        setClientNumero('');
-        setTitreProjet('');
-        setDescriptionProjet('');
-        setBudget('');
-        setDateSoumission(todayString);
-
-        setTimeout(() => {
-          setShowConfirmation(false);
-          navigate('/projetListClient');
-        }, 2000);
-      })
-      .catch((error) => console.log(error));
+  const projetSub = {
+    clientNom,
+    clientEmail,
+    clientNumero,
+    titreProjet,
+    descriptionProjet,
+    budget,
+    dateSoumission,
+    userId // 🟢 ici on l'ajoute
   };
+
+  axios.post('http://localhost:5000/projet/update/add', projetSub)
+    .then(() => {
+      setConfirmationMessage('Projet enregistré avec succès !');
+      setShowConfirmation(true);
+
+      // Réinitialisation
+      setClientNom('');
+      setClientEmail('');
+      setClientNumero('');
+      setTitreProjet('');
+      setDescriptionProjet('');
+      setBudget('');
+      setDateSoumission(todayString);
+
+      setTimeout(() => {
+        setShowConfirmation(false);
+        navigate('/projetListClient');
+      }, 2000);
+    })
+    .catch((error) => console.log(error));
+};
+
 
   return (
     <div className={`${styles.container} ${darkMode ? styles.dark : ""}`}>
@@ -139,4 +143,4 @@ const EnregistrerProjet = () => {
   );
 };
 
-export default EnregistrerProjet;
+export default ProjetRegister;

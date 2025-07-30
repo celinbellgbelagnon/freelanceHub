@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -20,24 +21,40 @@ const Login = () => {
     };
 
     axios
-      .post("http://localhost:5000/freelace/login", loginData)
+      .post("http://localhost:5000/user/login", loginData)
       .then((response) => {
         setLoading(false);
-        localStorage.setItem("token", response.data.accessToken);
-        localStorage.setItem("name", username);
+        const token = response.data.accessToken;
+        localStorage.setItem("token", token);
 
-        if (username.trim().toLowerCase() === "freelance") {
-          window.location.href = "/projectList";
-        } else if (username.trim().toLowerCase() === "client") {
-          window.location.href = "/projetListClient";
-        } else {
-          window.location.href = "/";
+        try {
+          const decoded = jwtDecode(token);
+          console.log("Token décodé ➤", decoded); // Optionnel pour debug
+
+          const profil = decoded.profil?.toLowerCase();
+          const userId = decoded.id_user; // ✅ Utiliser le bon nom
+
+          if (userId) {
+            localStorage.setItem("userId", userId); // ✅ Stockage correct
+          } else {
+            console.warn("ID utilisateur introuvable dans le token.");
+          }
+
+          localStorage.setItem("username", decoded.username);
+
+          if (profil === "freelance") {
+            window.location.href = "/projectList";
+          } else if (profil === "client") {
+            window.location.href = "/projetListClient";
+          } else {
+            window.location.href = "/";
+          }
+        } catch (decodeError) {
+          console.error("Erreur lors du décodage du token :", decodeError);
+          setError("Erreur lors de la connexion. Veuillez réessayer.");
         }
+
       })
-      .catch((error) => {
-        setLoading(false);
-        setError(error.response?.data?.error || "Nom d'utilisateur ou mot de passe incorrect.");
-      });
   };
 
   return (

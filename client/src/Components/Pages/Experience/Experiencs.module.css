@@ -54,7 +54,7 @@ h2 {
 
 h2::before {
   content: "";
-  display: inline-block;
+  display: none;
   width: 5px;
   height: 24px;
   background-color: #001dc0;
@@ -101,20 +101,26 @@ h2::before {
 }
 
 .learnMore {
+  display: inline-block;
   background: #001dc0;
   color: #fff;
-  border: none;
   padding: 14px 30px;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.3s ease;
+  text-decoration: none;
+  border: none;
+  text-align: center;
 }
 
 .learnMore:hover {
   background: #00b569;
+  color: #fff;
+  text-decoration: none;
 }
+
 
 @media (max-width: 900px) {
   .experienceSection {

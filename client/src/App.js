@@ -15,6 +15,8 @@ import ProjetMap from "./Components/Pages/ProjetMap/ProjetMap";
 import ConditionsUtilisation from "./Components/Pages/UserCondition/UserCondition";
 import PolitiqueConfidentialite from "./Components/Pages/ConfidentialPolitic/ConfidentialPolitic";
 import ProjetListClient from "./Components/Pages/ProjetListClient/ProjetListClient";
+import SavoirPlus from "./Components/Pages/SavoirPlus/SavoirPlus";
+import Services from "./Components/Pages/Services/Services";
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
         <Route path="/politiqueConfidentialite" element={<PolitiqueConfidentialite />} />
         <Route path="/projetListClient" element={<ProjetListClient />} />
         <Route path="/optionconnect" element={<OptionConnect />} />
+        <Route path="/savoirPlus" element={<SavoirPlus />} />
+        <Route path="/services" element={<Services />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>

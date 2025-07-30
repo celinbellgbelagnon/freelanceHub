@@ -3,7 +3,6 @@ import styles from "./ProjectList.module.css";
 import axios from "axios";
 import { FaSun, FaMoon } from "react-icons/fa";
 
-
 const ProjetList = () => {
   const [projets, setProjets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,9 +10,9 @@ const ProjetList = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [interets, setInterets] = useState([]);
 
-  const freelanceName = localStorage.getItem("name");
+  const freelanceId = localStorage.getItem("userId");
+  const freelanceName = localStorage.getItem("username");
 
-  // Charger les intérêts depuis localStorage (rapide, avant le backend)
   useEffect(() => {
     const savedInterets = localStorage.getItem("interets");
     if (savedInterets) {
@@ -33,12 +32,12 @@ const ProjetList = () => {
         );
         setLoading(false);
 
-        // Récupérer les intérêts du backend
         axios
-          .get(`http://localhost:5000/projet/interets/freelance/${freelanceName}`)
+          .get(`http://localhost:5000/projet/interets/freelance/${freelanceId}`)
           .then((res) => {
-            setInterets(res.data.projetsInteresses);
-            localStorage.setItem("interets", JSON.stringify(res.data.projetsInteresses));
+            const interetsIds = res.data.projetsInteresses.map((interet) => interet.id_projet);
+            setInterets(interetsIds);
+            localStorage.setItem("interets", JSON.stringify(interetsIds));
           })
           .catch(() => {
             setInterets([]);
@@ -49,7 +48,7 @@ const ProjetList = () => {
         setErreur("Erreur lors du chargement des projets");
         setLoading(false);
       });
-  }, [freelanceName]);
+  }, [freelanceId]);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -61,21 +60,13 @@ const ProjetList = () => {
     axios
       .post("http://localhost:5000/projet/update/interet", {
         projetId,
-        freelanceName,
+        freelanceId,
       })
       .then(() => {
         const updated = [...interets, projetId];
         setInterets(updated);
         localStorage.setItem("interets", JSON.stringify(updated));
         alert("Votre intérêt a été enregistré !");
-
-        axios
-          .post("http://localhost:5000/send-email", {
-            freelanceName,
-            projetTitre: projet.titre_projet,
-          })
-          .then(() => console.log("Email envoyé"))
-          .catch(() => alert("L’intérêt est enregistré, mais l’email n’a pas été envoyé."));
       })
       .catch(() => {
         alert("Erreur lors de l'enregistrement de votre intérêt.");
@@ -86,7 +77,7 @@ const ProjetList = () => {
     axios
       .post("http://localhost:5000/projet/delete/interet", {
         projetId,
-        freelanceName,
+        freelanceId,
       })
       .then(() => {
         const updated = interets.filter((id) => id !== projetId);
@@ -103,13 +94,13 @@ const ProjetList = () => {
     <div className={`${styles.container} ${darkMode ? styles.dark : styles.light}`}>
       <button className={styles.toggleButton} onClick={toggleDarkMode}>
         {darkMode ? (
-        <>
-          <FaSun style={{ marginRight: "8px" }} /> Mode clair
-        </>
+          <>
+            <FaSun style={{ marginRight: "8px" }} /> Mode clair
+          </>
         ) : (
-        <>
-          <FaMoon style={{ marginRight: "8px" }} /> Mode sombre
-        </>
+          <>
+            <FaMoon style={{ marginRight: "8px" }} /> Mode sombre
+          </>
         )}
       </button>
 

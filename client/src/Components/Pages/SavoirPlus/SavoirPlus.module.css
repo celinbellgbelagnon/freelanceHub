@@ -1,0 +1,257 @@
+.container {
+  padding: 60px 5%;
+  background-color: #f4f7fb;
+  color: #1a1a1a;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.7rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.intro {
+  text-align: center;
+  font-size: 1.15rem;
+  max-width: 800px;
+  margin: 0 auto 50px;
+  color: #444;
+  line-height: 1.6;
+}
+
+.cards {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-bottom: 80px;
+}
+
+.card {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(0, 29, 192, 0.1);
+}
+
+.icon {
+  font-size: 2.8rem;
+  color: #001dc0;
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  color: #1a1a1a;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* === Contact Section === */
+.contactSection {
+  padding: 60px 5%;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.contactSection h2 {
+  text-align: center;
+  color: #001dc0;
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+
+.contactSection h2::before,
+.contactSection h2::after {
+  content: none !important;
+  display: none !important;
+}
+
+.contactGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+  max-width: 100%;
+}
+
+.contactInfo {
+  flex: 1;
+  min-width: 280px;
+  padding: 30px 10px;
+}
+
+.contactInfo p {
+  font-size: 1rem;
+  margin: 10px 0;
+  color: #444;
+}
+
+.contactIcon {
+  margin-right: 10px;
+  color: #001dc0;
+}
+
+.contactForm {
+  flex: 1;
+  min-width: 300px;
+  padding: 40px;
+  border-radius: 1rem;
+  border: 1px solid #dcdcdc;
+  background-color: #f9f9f9;
+}
+
+.contactForm label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.contactForm input,
+.contactForm textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #fff;
+  resize: vertical;
+}
+
+.contactForm textarea {
+  min-height: 120px;
+}
+
+.contactForm button {
+  margin-top: 20px;
+  padding: 14px 25px;
+  background-color: #001dc0;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.contactForm button:hover {
+  background-color: #00b569;
+}
+
+/* === Popup de succès === */
+.successOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.successPopup {
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 40px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.5s ease;
+}
+
+.successIcon {
+  color: #00b569;
+  font-size: 70px;
+  margin-bottom: 20px;
+}
+
+.successPopup h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.successPopup button {
+  background-color: #001dc0;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.successPopup button:hover {
+  background-color: #00b569;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+/* AOS fix */
+[data-aos]::before,
+[data-aos]::after {
+  content: none !important;
+  display: none !important;
+}
+
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .contactGrid {
+    flex-direction: column;
+  }
+
+  .contactInfo,
+  .contactForm {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    padding: 40px 5%;
+  }
+}
+.mapContainer {
+  margin-top: 20px;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}

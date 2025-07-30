@@ -9,7 +9,7 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const name = localStorage.getItem("name");
+    const name = localStorage.getItem("username");
     if (name) setUsername(name);
   }, []);
 
@@ -31,7 +31,6 @@ const Navbar = () => {
           <span className={styles.blue}>freelance</span>
           <span className={styles.bold}>Hub</span>
         </div>
-
         <div className={styles.hamburger} onClick={toggleMenu}>
           <span></span>
           <span></span>
@@ -45,7 +44,7 @@ const Navbar = () => {
           <Link to="/services" onClick={() => setMenuOpen(false)}>
             <FaCogs className={styles.icon} /> Services
           </Link>
-          <Link to="/About" onClick={() => setMenuOpen(false)}>
+          <Link to="/savoirPlus" onClick={() => setMenuOpen(false)}>
             <FaInfoCircle className={styles.icon} /> À propos
           </Link>
         </nav>

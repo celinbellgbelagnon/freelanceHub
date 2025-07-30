@@ -29,33 +29,37 @@ exports.signupadmin = (req, res) =>{
 
 
 exports.loginadmin = (req, res) => {
-    console.log(req.body);
+  console.log(req.body);
 
-    const selectadminQuery = 'select * from admin where username = ?';
-    database.query(selectadminQuery, [req.body.nom], (error, result)=>{
-        if(error){
-            return res.status(501).json({ error: error.message});
-        }
-        if (result.length > 0) {
-            bcrypt.compare(req.body.password, result[0].password_admin)
-            .then((valid) =>{
-                if (valid) {
-                    let accessToken = jwt.sign(
-                        {id_admin: result[0].id_admin},
-                        '12345678', // Remplacer par une clé secrète sécurisée
-                        { expiresIn: '1h'}
-                    );
-                    res.status(201).json({ accessToken });
-                } else{
-                    res.status(401).json({ error: "Mot de passe incorect"});
-                }
-            })
-            .catch((error) =>{
-                res.status(501).json({ error: "erreur de comparaison", details: error.message });
-            });
+  const selectadminQuery = 'select * from admin where username = ?';
+  database.query(selectadminQuery, [req.body.nom], (error, result) => {
+    if(error){
+      return res.status(501).json({ error: error.message });
+    }
+    if (result.length > 0) {
+      bcrypt.compare(req.body.password, result[0].password_admin)
+      .then((valid) => {
+        if (valid) {
+          let accessToken = jwt.sign(
+            { id_admin: result[0].id_admin },
+            '12345678', // Remplacer par une clé secrète sécurisée
+            { expiresIn: '1h' }
+          );
+          // Renvoie maintenant aussi l'id et le username
+          res.status(201).json({ 
+            accessToken,
+            id_admin: result[0].id_admin,
+            nom: result[0].username
+          });
         } else {
-            res.status(404).json({ error: "Admin not found"});
+          res.status(401).json({ error: "Mot de passe incorrect" });
         }
-    });
-       
+      })
+      .catch((error) => {
+        res.status(501).json({ error: "Erreur de comparaison", details: error.message });
+      });
+    } else {
+      res.status(404).json({ error: "Admin not found" });
+    }
+  });
 }

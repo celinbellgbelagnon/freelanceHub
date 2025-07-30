@@ -11,7 +11,7 @@ const Signup = () => {
   const [telephone, setTelephone] = useState('');
   const [specialite, setSpecialite] = useState('');
   const [date, setDate] = useState('');
-  const [profil, setProfil] = useState('freelance');
+  const [profil, setProfil] = useState('');
   const [cvFile, setCvFile] = useState(null);
 
   const today = new Date();
@@ -19,6 +19,13 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Regex stricte pour emails finissant par des extensions valides
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|fr|org|net|edu|info|io|co|sn|tg|cm|biz)$/i;
+    if (!emailRegex.test(email)) {
+      alert("Adresse e-mail invalide. Elle doit se terminer par .com, .fr, .org, etc.");
+      return;
+    }
 
     if (password !== confirmPassword) {
       alert('Les mots de passe ne correspondent pas.');
@@ -40,7 +47,7 @@ const Signup = () => {
     formData.append('profil', profil);
     if (cvFile) formData.append('cv_pdf', cvFile);
 
-    axios.post('http://localhost:5000/freelace/signup', formData, {
+    axios.post('http://localhost:5000/user/signup', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
     .then(() => {
@@ -77,6 +84,9 @@ const Signup = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={styles.input}
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|fr|org|net|edu|info|io|co|sn|tg|cm|biz)$"
+                title="L'adresse doit se terminer par .com, .fr, .org, etc."
+                required
               />
               <input
                 type="password"
@@ -122,19 +132,25 @@ const Signup = () => {
                 className={styles.input}
                 required
               >
+                <option value="">Profil</option>
                 <option value="freelance">Freelance</option>
                 <option value="client">Client</option>
               </select>
-              <label className={styles.label}>
-                Téléversez votre CV (PDF uniquement)
-              </label>
-              <input
-                type="file"
-                accept="application/pdf"
-                onChange={(e) => setCvFile(e.target.files[0])}
-                className={styles.input}
-                required={profil === "freelance"}
-              />
+
+              {profil === "freelance" && (
+                <>
+                  <label className={styles.label}>
+                    Téléversez votre CV (PDF uniquement)
+                  </label>
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    onChange={(e) => setCvFile(e.target.files[0])}
+                    className={styles.input}
+                    required
+                  />
+                </>
+              )}
             </div>
           </div>
           <button type="submit" className={styles.button}>
@@ -142,10 +158,7 @@ const Signup = () => {
           </button>
         </form>
 
-        <p
-          className={styles.footnote}
-          
-        >
+        <p className={styles.footnote}>
           Avez-vous déjà un compte ?{" "}
           <Link to="/login" className={styles.link}>
             Connectez-vous

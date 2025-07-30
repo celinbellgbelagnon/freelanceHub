@@ -95,5 +95,27 @@ exports.loginUser = (req, res) => {
     });
 };
 
+// Comptage des freelances
+exports.countFreelances = (req, res) => {
+  const query = "SELECT COUNT(*) AS total FROM user where profil = 'freelance'";
+  database.query(query, (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "Erreur lors du comptage des freelances" });
+    }
+    res.json({ total: result[0].total });
+  });
+};
+
+
+//comtage de tous les users
+exports.countUsers = (req, res) => {
+  const query = "SELECT COUNT(*) AS total FROM user";
+  database.query(query, (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "Erreur lors du comptage des users" });
+    }
+    res.json({ total: result[0].total });
+  });
+};
 
 exports.uploadCv = upload.single('cv_pdf');

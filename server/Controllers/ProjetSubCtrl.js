@@ -4,17 +4,21 @@ require("dotenv").config();
 
 // Ajouter un nouveau projet
 exports.addnewProjet = (req, res) => {
-  const query = 'INSERT INTO projet_sub (nom_client, email_client, telephone_client, titre_projet, description_projet, budget, date_soumission) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  const query = `INSERT INTO projet_sub 
+(nom_client, email_client, telephone_client, titre_projet, description_projet, budget, date_soumission, id_user) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
-  const values = [
-    req.body.clientNom,
-    req.body.clientEmail,
-    req.body.clientNumero,
-    req.body.titreProjet,
-    req.body.descriptionProjet,
-    req.body.budget,
-    req.body.dateSoumission
-  ];
+const values = [
+  req.body.clientNom,
+  req.body.clientEmail,
+  req.body.clientTelephone,
+  req.body.titreProjet,
+  req.body.descriptionProjet,
+  req.body.budget,
+  req.body.dateSoumission,
+  req.body.userId, // important !
+];
+
 
   database.query(query, values, (error, result) => {
     if (error) {
@@ -23,6 +27,7 @@ exports.addnewProjet = (req, res) => {
     res.status(201).json({ message: 'Projet ajouté avec succès' });
   });
 };
+
 
 // Récupérer tous les projets
 exports.getProjet = (req, res) => {
@@ -36,31 +41,46 @@ exports.getProjet = (req, res) => {
   });
 };
 
+
+// Récupérer les projets d'un client spécifique
+exports.getProjetParClient = (req, res) => {
+  const userId = req.params.userId;
+  const query = 'SELECT * FROM projet_sub WHERE id_user = ?';
+  database.query(query, [userId], (error, result) => {
+    if (error) {
+      return res.status(500).json({ message: 'Erreur lors de la récupération des projets du client' });
+    }
+    res.status(200).json({ Projet: result });
+  });
+};
+
+
 // Ajouter un intérêt pour un projet
 exports.ajouterInteret = (req, res) => {
-  const { projetId, freelanceName } = req.body;
+  const { projetId, freelanceId } = req.body;
 
-  // 1. Récupérer les infos du freelance
-  const getFreelanceQuery = `
-    SELECT * FROM user 
-    WHERE username = ? AND profil = 'freelance'
-  `;
+  if (!projetId || !freelanceId) {
+    return res.status(400).json({ message: "projetId ou freelanceId manquant" });
+  }
 
-  database.query(getFreelanceQuery, [freelanceName], (err, freelanceResults) => {
+  // Récupérer les infos du freelance
+  const getFreelanceQuery = `SELECT * FROM user WHERE id_user = ? AND profil = 'freelance'`;
+
+  database.query(getFreelanceQuery, [freelanceId], (err, freelanceResults) => {
     if (err || freelanceResults.length === 0) {
       return res.status(400).json({ message: "Freelance introuvable" });
     }
 
     const freelance = freelanceResults[0];
 
-    // 2. Enregistrer l’intérêt
+    // Enregistrer l’intérêt
     const insertQuery = 'INSERT INTO interet_projet (id_projet, id_freelance) VALUES (?, ?)';
-    database.query(insertQuery, [projetId, freelance.id_user], (insertErr) => {
+    database.query(insertQuery, [projetId, freelanceId], (insertErr) => {
       if (insertErr) {
         return res.status(500).json({ message: "Erreur lors de l'enregistrement de l'intérêt" });
       }
 
-      // 3. Récupérer les infos du projet
+      // Récupérer les infos du projet
       const getProjetQuery = "SELECT * FROM projet_sub WHERE id = ?";
       database.query(getProjetQuery, [projetId], (errProjet, projetResults) => {
         if (errProjet || projetResults.length === 0) {
@@ -69,7 +89,7 @@ exports.ajouterInteret = (req, res) => {
 
         const projet = projetResults[0];
 
-        // 4. Préparer et envoyer l'e-mail
+        // Préparer et envoyer l'e-mail
         const transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
@@ -119,6 +139,7 @@ exports.ajouterInteret = (req, res) => {
 };
 
 
+
 // Supprimer un intérêt
 exports.supprimerInteret = (req, res) => {
   const { projetId, freelanceName } = req.body;
@@ -141,6 +162,7 @@ exports.supprimerInteret = (req, res) => {
     });
   });
 };
+
 
 // Récupérer les projets intéressés par un freelance
 exports.getProjetsInteressesParFreelance = (req, res) => {
@@ -166,6 +188,7 @@ exports.getProjetsInteressesParFreelance = (req, res) => {
   });
 };
 
+// Récupérer les freelances intéressés par un projet
 exports.getInteressesParProjet = (req, res) => {
   const projetId = req.params.projetId;
   const query = `
@@ -179,5 +202,59 @@ exports.getInteressesParProjet = (req, res) => {
       return res.status(500).json({ message: "Erreur lors de la récupération des freelances intéressés" });
     }
     res.status(200).json({ interesses: results });
+  });
+};
+
+
+//signaler un projet ayant trouvé un freelance
+exports.signalerProjet = (req, res) => {
+  const projetId = req.params.projetId;
+
+  const checkQuery = "SELECT est_signale FROM projet_sub WHERE id = ?";
+  database.query(checkQuery, [projetId], (checkErr, result) => {
+    if (checkErr || result.length === 0) {
+      return res.status(400).json({ message: "Projet introuvable" });
+    }
+
+    if (result[0].est_signale === 1) {
+      return res.status(409).json({ message: "Ce projet a déjà été signalé." });
+    }
+
+    const updateQuery = "UPDATE projet_sub SET est_signale = 1 WHERE id = ?";
+    database.query(updateQuery, [projetId], (error) => {
+      if (error) {
+        return res.status(500).json({ message: "Erreur lors du signalement" });
+      }
+
+      res.status(200).json({ message: "Projet signalé avec succès" });
+    });
+  });
+};
+
+
+// Récupérer tous les projets signalés comme servis
+exports.getProjetsServis = (req, res) => {
+  const query = "SELECT * FROM projet_sub WHERE est_signale = 1 OR projet_servi = 1";
+
+  database.query(query, (error, results) => {
+    if (error) {
+      return res.status(500).json({ message: "Erreur lors de la récupération des projets servis" });
+    }
+
+    res.status(200).json({ projetsServis: results });
+  });
+};
+
+
+// Comptage des projets
+exports.countProjets = (req, res) => {
+  const query = "SELECT COUNT(*) AS total FROM projet_sub";
+
+  database.query(query, (error, results) => {
+    if (error) {
+      return res.status(500).json({ message: "Erreur lors du comptage des projets" });
+    }
+
+    res.status(200).json({ total: results[0].total });
   });
 };

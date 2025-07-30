@@ -1,39 +1,66 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+CREATE DATABASE IF NOT EXISTS `freelancehub`
+  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS `freelance`;
-CREATE TABLE IF NOT EXISTS `freelance` (
-  `id_freelance` int NOT NULL AUTO_INCREMENT,
+USE `freelancehub`;
+
+
+CREATE TABLE `admin` (
+  `id_admin` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password_admin` varchar(100) NOT NULL,
+  `telephone` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id_admin`),
+  UNIQUE KEY `username` (`username`,`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `contact_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `message` text NOT NULL,
+  `date_envoi` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `user` (
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(100) NOT NULL,
   `email` varchar(150) NOT NULL,
-  `password_freelance` varchar(60) NOT NULL,
+  `password` varchar(60) NOT NULL,
   `telephone` varchar(20) DEFAULT NULL,
   `specialite` varchar(100) DEFAULT NULL,
-  `date_inscription` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_freelance`),
-  UNIQUE KEY `username` (`username`,`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `date_inscription` date DEFAULT NULL,
+  `profil` enum('freelance','client') NOT NULL DEFAULT 'freelance',
+  `cv_pdf` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_user`),
+  UNIQUE KEY `username_email` (`username`,`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
-
-DROP TABLE IF EXISTS `projet_sub`;
-CREATE TABLE IF NOT EXISTS `projet_sub` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `projet_sub` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom_client` varchar(255) NOT NULL,
   `email_client` varchar(255) NOT NULL,
   `telephone_client` varchar(20) DEFAULT NULL,
   `titre_projet` varchar(200) NOT NULL,
-  `description_projet` text,
+  `description_projet` text DEFAULT NULL,
   `budget` decimal(10,2) DEFAULT NULL,
-  `date_soumission` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `date_soumission` timestamp NULL DEFAULT current_timestamp(),
+  `est_signale` tinyint(4) DEFAULT 0,
+  `id_user` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_projet_user` (`id_user`),
+  CONSTRAINT `fk_projet_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `projet_sub` (`id`, `nom_client`, `email_client`, `telephone_client`, `titre_projet`, `description_projet`, `budget`, `date_soumission`) VALUES
-(1, 'Antoine', 'celinbell@gmail.com', '89674523', 'e comm', 'Développement d’un site e-commerce', '2300.00', '2025-02-13 17:18:00'),
-(2, 'koffi', 'koffi@gmail.com', '437698959', 'huck', 'Refonte d’un site vitrine', '346.00', '2025-02-13 17:25:00'),
-(3, 'gerard', 'gerard@gmail.com', '78365242', 'app mobile', 'Développement d’une application mobile', '498.00', '2025-02-13 17:34:00'),
-(4, 'celiny', 'celi@f.fr', '786766445', 'uiyyy', 'Rédaction de contenu SEO', '890.00', '2025-02-13 17:36:00');
-
-COMMIT;
+CREATE TABLE `interet_projet` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_projet` int(11) NOT NULL,
+  `id_freelance` int(11) NOT NULL,
+  `date_interet` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `id_projet` (`id_projet`),
+  KEY `id_freelance` (`id_freelance`),
+  CONSTRAINT `interet_projet_ibfk_1` FOREIGN KEY (`id_projet`) REFERENCES `projet_sub` (`id`),
+  CONSTRAINT `interet_projet_ibfk_2` FOREIGN KEY (`id_freelance`) REFERENCES `user` (`id_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
