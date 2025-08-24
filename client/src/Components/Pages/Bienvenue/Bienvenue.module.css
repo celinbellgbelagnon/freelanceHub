@@ -1,60 +1,59 @@
-/* Conteneur principal */
+/* Bienvenue.module.css */
 .container {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #fff;
-  color: #333;
-  text-align: center;
   padding: 20px;
 }
 
-/* Contenu centré */
 .content {
-  background: #f9f9f9;
+  background: #f3f3f3;
   padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+  border-radius: 18px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  max-width: 800px;
   width: 100%;
-  transition: transform 0.3s ease-in-out;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
 }
 
-.content:hover {
-  transform: translateY(-5px);
-}
-
-/* Titre principal */
 .title {
   font-size: 2.5rem;
   font-weight: bold;
-  margin-bottom: 10px;
-  color: #222;
+  color: #001dc0;
+  margin-bottom: 15px;
 }
 
 .title span {
-  color: #1e1e2f; /* Orange */
+  color: #001dc0;
+  background-color: #001dc0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Sous-titre */
 .subtitle {
   font-size: 1.2rem;
-  margin-bottom: 20px;
-  color: #666;
+  color: #333;
+  margin-bottom: 25px;
+  line-height: 1.6;
 }
 
-/* Section des mentions légales */
 .legal {
-  margin-top: 30px;
-  padding-top: 15px;
-  border-top: 2px solid rgba(0, 0, 0, 0.1);
+  text-align: left;
+  background: #f8f8f8;
+  padding: 20px;
+  border-left: 5px solid #001dc0;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  animation: slideUp 0.8s ease;
 }
 
 .legal h2 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   margin-bottom: 10px;
-  color: #1e1e2f;
+  color: #001dc0;
 }
 
 .legal p {
@@ -62,33 +61,70 @@
   color: #444;
 }
 
-/* Liens */
 .link {
-  color: #1e1e2f;
-  font-weight: bold;
+  color: #001dc0;
+  font-weight: 600;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: 0.3s;
 }
 
 .link:hover {
-  color: #1e1e2f;
+  text-decoration: underline;
+  color: #001dc0;
 }
 
-/* Bouton interactif */
 .button {
   display: inline-block;
-  background-color: #1e1e2f;
-  color: #fff;
-  padding: 12px 25px;
+  padding: 14px 22px;
   font-size: 1rem;
-  border-radius: 8px;
-  text-decoration: none;
   font-weight: bold;
-  margin-top: 20px;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  color: #fff;
+  background-color: #001dc0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .button:hover {
-  background-color: #1e1e2f;
-  transform: scale(1.05);
+  transform: translateY(-3px);
+  box-shadow: 0px 6px 15px rgba(195, 55, 100, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .content {
+    padding: 25px;
+  }
 }

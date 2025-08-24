@@ -82,7 +82,7 @@ useEffect(() => {
             <FontAwesomeIcon icon={faClock} className={styles.icon} />
             <div>
               <h3><CountUp end={projectCount} duration={2} separator="," />+</h3>
-              <p>Projets réalisés</p>
+              <p>Projets soumis</p>
             </div>
           </div>
           <div className={styles.statBox}>

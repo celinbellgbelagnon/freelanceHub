@@ -4,40 +4,69 @@ require("dotenv").config();
 
 // Ajouter un nouveau projet
 exports.addnewProjet = (req, res) => {
-  const query = `INSERT INTO projet_sub 
-(nom_client, email_client, telephone_client, titre_projet, description_projet, budget, date_soumission, id_user) 
-VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+  const { titreProjet, descriptionProjet, budget, userId } = req.body;
 
-const values = [
-  req.body.clientNom,
-  req.body.clientEmail,
-  req.body.clientTelephone,
-  req.body.titreProjet,
-  req.body.descriptionProjet,
-  req.body.budget,
-  req.body.dateSoumission,
-  req.body.userId, // important !
-];
+  if (!titreProjet || !userId) {
+    return res.status(400).json({ message: "Titre du projet et ID utilisateur sont obligatoires" });
+  }
 
+  const dateSoumission = new Date();
 
-  database.query(query, values, (error, result) => {
-    if (error) {
-      return res.status(500).json({ message: 'Erreur lors de l’ajout du projet' });
-    }
-    res.status(201).json({ message: 'Projet ajouté avec succès' });
+  const insertQuery = `
+    INSERT INTO projet_sub
+    (titre_projet, description_projet, budget, date_soumission, id_user)
+    VALUES (?, ?, ?, ?, ?)
+  `;
+
+  const values = [
+    titreProjet,
+    descriptionProjet || null,
+    budget || null,
+    dateSoumission,
+    userId
+  ];
+
+  database.query(insertQuery, values, (error, result) => {
+    if (error) return res.status(500).json({ message: "Erreur lors de l’ajout du projet", error });
+    res.status(201).json({ message: "Projet ajouté avec succès", id: result.insertId });
   });
 };
 
 
 // Récupérer tous les projets
 exports.getProjet = (req, res) => {
-  const query = 'SELECT * FROM projet_sub';
+  const query = `
+    SELECT p.id, p.titre_projet, p.description_projet, p.budget, p.date_soumission, 
+           u.username AS nom_client, u.email AS email_client
+    FROM projet_sub p
+    JOIN user u ON p.id_user = u.id_user
+    ORDER BY p.date_soumission ASC
+  `;
 
   database.query(query, (error, result) => {
     if (error) {
-      return res.status(500).json({ message: 'Erreur lors de la récupération des projets' });
+      return res.status(500).json({ message: "Erreur lors de la récupération des projets", error });
     }
     res.status(200).json({ Projet: result });
+  });
+};
+
+
+// Récupérer un projet par son ID
+exports.getProjetById = (req, res) => {
+  const { id } = req.params;
+
+  database.query("SELECT * FROM projet_sub WHERE id = ?", [id], (err, result) => {
+    if (err) {
+      console.error("Erreur SQL :", err);
+      return res.status(500).json({ error: err.message });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ error: "Projet non trouvé" });
+    }
+
+    res.json({ projet: result[0] });
   });
 };
 
@@ -81,7 +110,13 @@ exports.ajouterInteret = (req, res) => {
       }
 
       // Récupérer les infos du projet
-      const getProjetQuery = "SELECT * FROM projet_sub WHERE id = ?";
+      const getProjetQuery = `
+  SELECT p.*, u.username AS nom_client, u.email AS email_client, u.telephone AS telephone_client
+  FROM projet_sub p
+  JOIN user u ON p.id_user = u.id_user
+  WHERE p.id = ?
+`;
+
       database.query(getProjetQuery, [projetId], (errProjet, projetResults) => {
         if (errProjet || projetResults.length === 0) {
           return res.status(500).json({ message: "Projet introuvable pour l'e-mail" });
@@ -162,6 +197,21 @@ exports.supprimerInteret = (req, res) => {
     });
   });
 };
+
+// Récupérer les projets intéressés par un freelance
+exports.getInteretsByFreelance = (req, res) => {
+  const { id } = req.params;
+
+  const query = "SELECT id_projet FROM interet_projet WHERE id_freelance = ?";
+  database.query(query, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: "Erreur lors de la récupération des intérêts", err });
+    }
+
+    res.status(200).json({ projetsInteresses: results });
+  });
+};
+
 
 
 // Récupérer les projets intéressés par un freelance

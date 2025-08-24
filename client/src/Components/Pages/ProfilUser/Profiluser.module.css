@@ -1,0 +1,157 @@
+/* ====== Container principal ====== */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+  font-family: "Segoe UI", sans-serif;
+  padding: 20px;
+}
+
+/* ====== Card Profil ====== */
+.card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* ====== Photo de Profil ====== */
+.photoWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.photo {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.photo:hover {
+  transform: scale(1.05);
+}
+
+.noPhoto {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #777;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.photoWrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.photo {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.photoWrapper:hover .photo {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.noPhoto {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.noPhoto:hover {
+  background: #ccc;
+}
+
+
+/* ====== Infos utilisateur ====== */
+.info {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.info p {
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+.info strong {
+  color: #007bff;
+}
+
+/* ====== Upload section ====== */
+.uploadSection {
+  margin-top: 20px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.fileLabel {
+  display: inline-block;
+  background: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.fileLabel:hover {
+  background: #0056b3;
+}
+
+.uploadButton {
+  margin-top: 10px;
+  display: inline-block;
+  background: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.uploadButton:hover {
+  background: #1e7e34;
+}
+
+/* ====== Animation ====== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}

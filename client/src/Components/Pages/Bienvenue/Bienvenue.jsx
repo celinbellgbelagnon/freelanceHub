@@ -27,7 +27,7 @@ const Bienvenue = () => {
         </div>
 
         {/* Bouton déplacé après la section légale */}
-        <Link to="/login" className={styles.button}>
+        <Link to="/signup" className={styles.button}>
           Oui j'accepte les conditions d'utilisations et la politique de confidentialité
         </Link>
       </div>

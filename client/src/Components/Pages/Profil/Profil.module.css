@@ -1,130 +1,126 @@
 .descriptionSection {
   padding: 60px 40px;
-  background-color: #f9fbfd;
+  background-color: #f7faff;
   font-family: sans-serif;
-}
-
-.intro {
   text-align: center;
-  margin-bottom: 50px;
 }
 
 .intro h2 {
   font-size: 28px;
-  color: #001dc0;
   margin-bottom: 10px;
+  color: #001dc0;
 }
 
 .intro p {
-  max-width: 700px;
-  margin: 0 auto;
   color: #333;
-  font-size: 16px;
+  max-width: 600px;
+  margin: 0 auto 40px;
 }
 
-.cardGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
-  overflow-x: auto;
-}
-
-.card {
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease;
-  position: relative;
-  color: #222;
-  overflow: hidden;
-  min-height: 380px;      /* Hauteur augmentée */
-  height: 420px;          /* Hauteur fixe pour bien voir la photo */
+.cardContainer {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  justify-content: center;
+  height: 240px;
+  gap: 16px;
+  transition: 0.3s;
+  width: 100%;
+  max-width: 100%;
+}
+
+.cardItem {
   position: relative;
   overflow: hidden;
+  flex: 0 0 80px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.4s ease;
+  box-shadow: 4px 8px 16px rgba(0,0,0,0.3);
 }
 
-.card h3 {
-  color: #001dc0;
-  margin-bottom: 10px;
-  position: relative;
-  z-index: 2;
-  background: rgba(255,255,255,0.7);
-  padding: 8px 0;
-  text-align: center;
+.cardItem img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.3s;
 }
 
-/* Masquer description et testimonial par défaut */
-.cardText,
-.testimonial {
+.cardItem .content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 20px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 10%, rgba(255, 255, 255, 0) 100%);
   opacity: 0;
   visibility: hidden;
-  max-height: 0;
-  transition: opacity 0.3s, max-height 0.3s;
-  position: relative;
+  transition: 0.5s;
+}
+
+.cardItem .content span {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  translate: -50%;
+  text-align: center;
+  scale: 0.85;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s;
+  color: #fff;
+}
+
+.cardItem h2 {
+  font-size: 18px;
+  margin-bottom: 6px;
+  font-weight: 600;
+  border: none !important; 
+  background-color: #000b6d;
+  color: #fff;
+}
+
+.cardItem p {
+  font-size: 14px;
+  margin-bottom: 6px;
+  background-color: transparent;
+  color: #eee;
+}
+
+.cardItem blockquote {
+  font-style: italic;
+  font-size: 12px;
+  margin: 4px 0;
+}
+
+.cardItem cite {
+  font-size: 12px;
+  font-weight: bold;
+  color: #eee;
+}
+
+.cardContainer:hover {
+  gap: 0;
+  height: 400px;
+}
+
+.cardItem:hover {
+  flex: 0 1 260px;
+  scale: 1.05;
   z-index: 2;
 }
 
-/* Afficher description et testimonial au hover */
-.card:hover .cardText,
-.card:hover .testimonial {
+.cardItem:hover .content {
   opacity: 1;
   visibility: visible;
-  max-height: 200px;
-  transition: opacity 0.3s, max-height 0.3s;
 }
 
-/* Optionnel : foncer le voile au hover pour la lisibilité */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  transition: background 0.3s;
-}
-.card:hover::before {
-  /* background: rgba(255,255,255,0.92); */
-}
-
-/* Fond bleu sous la description au hover */
-.card:hover .cardText,
-.card:hover .testimonial {
-  background: rgba(0, 29, 192, 0.85); /* bleu avec opacité */
-  color: #fff;
-  border-radius: 8px;
-  padding: 12px;
-}
-
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
-  backdrop-filter: blur(6px);
-}
-
-.card:hover::after {
+.cardItem:hover .content span {
+  scale: 1;
   opacity: 1;
-}
-.testimonial {
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
-  font-style: italic;
-  font-size: 14px;
-  color: #555;
-}
-
-.testimonial cite {
-  display: block;
-  margin-top: 5px;
-  font-weight: bold;
-  color: #000;
+  visibility: visible;
 }

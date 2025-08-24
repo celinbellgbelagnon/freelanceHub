@@ -1,13 +1,15 @@
 
-/* Conteneur principal 
+
 .container {
   font-family: Arial, sans-serif;
   color: #1e1e2f;
-  padding: 20px;
+  padding: 0;
+  margin: 0;
   text-align: center;
+  width: 100%;
 }
 
-
+/* Conteneur principal 
 .header {
   position: relative;
   background: url('../../../Assets/freelance1.jpg') no-repeat center/cover;

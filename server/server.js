@@ -8,7 +8,7 @@ const freelanceListRoute = require('./Routes/FreelanceListRoute');
 const adminRoute = require('./Routes/AdminRoute');
 const clientRoute = require('./Routes/ClientRoute');
 const userRoute = require('./Routes/UserRoute');
-
+ 
 
 
 
@@ -22,7 +22,7 @@ app.use('/freelance', freelanceRoute);
 app.use("/freelanceList", freelanceListRoute);
 app.use("/admin", adminRoute);
 app.use("/client", clientRoute);
-app.use('/user', userRoute);
+app.use('/user', userRoute); 
 
 app.listen(5000, ()=>{
     console.log('Server runnig on port 5000')

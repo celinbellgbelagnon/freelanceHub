@@ -17,6 +17,9 @@ import PolitiqueConfidentialite from "./Components/Pages/ConfidentialPolitic/Con
 import ProjetListClient from "./Components/Pages/ProjetListClient/ProjetListClient";
 import SavoirPlus from "./Components/Pages/SavoirPlus/SavoirPlus";
 import Services from "./Components/Pages/Services/Services";
+import Auth from "./Components/Pages/Auth/Auth";
+import ProfilUser from "./Components/Pages/ProfilUser/ProfilUser";
+import ProtectedRoute from "./Components/Pages/ProtectedRoute/ProtectedRoute";
 
 function App() {
   return (
@@ -27,17 +30,22 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/bienvenue" element={<Bienvenue />} />
-        <Route path="/enregistrer-projet" element={<EnregistrerProjet />} />
-        <Route path="/projectList" element={<ProjectList />} />
-        <Route path="/projetMap" element={<ProjetMap />} />
-        <Route path="/conditionUtilisation" element={<ConditionsUtilisation />} />
-        <Route path="/politiqueConfidentialite" element={<PolitiqueConfidentialite />} />
-        <Route path="/projetListClient" element={<ProjetListClient />} />
-        <Route path="/optionconnect" element={<OptionConnect />} />
-        <Route path="/savoirPlus" element={<SavoirPlus />} />
-        <Route path="/services" element={<Services />} />
+        {/* <Route path="/auth" element={<Auth />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        <Route path="/enregistrer-projet" element={<ProtectedRoute><EnregistrerProjet /></ProtectedRoute> } />
+        <Route path="/projectList" element={<ProtectedRoute><ProjectList /></ProtectedRoute> } />
+        <Route path="/projetMap" element={<ProtectedRoute><ProjetMap /></ProtectedRoute> } />
+        <Route path="/conditionUtilisation" element={<ProtectedRoute><ConditionsUtilisation /></ProtectedRoute> } />
+        <Route path="/politiqueConfidentialite" element={<ProtectedRoute><PolitiqueConfidentialite /></ProtectedRoute> } />
+        <Route path="/projetListClient" element={<ProtectedRoute><ProjetListClient /></ProtectedRoute> } />
+        <Route path="/optionconnect" element={<ProtectedRoute><OptionConnect /></ProtectedRoute>} />
+        <Route path="/savoirPlus" element={<ProtectedRoute><SavoirPlus /></ProtectedRoute>} />
+        <Route path="/services" element={<ProtectedRoute><Services /></ProtectedRoute>} />
+        <Route path="/profiluser" element={<ProtectedRoute><ProfilUser /></ProtectedRoute>} />
+
+        
       </Routes>
 
       <Footer />

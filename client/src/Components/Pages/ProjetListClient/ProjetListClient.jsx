@@ -78,9 +78,9 @@ const ProjetListClient = () => {
 
   return (
     <div className={`${styles.container} ${darkMode ? styles.dark : styles.light}`}>
-      <button className={styles.toggleButton} onClick={toggleDarkMode}>
-        {darkMode ? <FaSun /> : <FaMoon />} {darkMode ? "Mode clair" : "Mode sombre"}
-      </button>
+  <button className={styles.toggleButton} onClick={toggleDarkMode}>
+    {darkMode ? <FaSun /> : <FaMoon />} {darkMode ? "Mode clair" : "Mode sombre"}
+  </button>
 
       <h2>Liste des Projets Soumis</h2>
 

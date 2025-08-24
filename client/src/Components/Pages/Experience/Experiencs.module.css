@@ -50,6 +50,7 @@ h2 {
   color: #001dc0;
   font-size: 2rem;
   margin-bottom: 18px;
+  border: none !important; 
 }
 
 h2::before {

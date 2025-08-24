@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./ProjetRegister.module.css";
-import { Sun } from "lucide-react"; // Icône de soleil
+import { Sun } from "lucide-react";
 import axios from "axios";
 
 const ProjetRegister = () => {
-  const [clientNom, setClientNom] = useState('');
-  const [clientEmail, setClientEmail] = useState('');
-  const [clientNumero, setClientNumero] = useState('+22890112233');
   const [titreProjet, setTitreProjet] = useState('');
   const [descriptionProjet, setDescriptionProjet] = useState('');
   const [budget, setBudget] = useState('');
@@ -15,55 +12,57 @@ const ProjetRegister = () => {
   const [erreur, setErreur] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [darkMode, setDarkMode] = useState(false); // 👈 dark mode ajouté
+  const [darkMode, setDarkMode] = useState(false);
 
-  const navigate = useNavigate();
+   const navigate = useNavigate();
   const todayString = new Date().toISOString().slice(0, 10);
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  if (!clientNom || !clientEmail || !clientNumero || !titreProjet || !descriptionProjet || !budget || !dateSoumission) {
-    setErreur("Tous les champs obligatoires doivent être remplis !");
-    return;
-  }
+    e.preventDefault();
 
-  setErreur('');
+    if (!titreProjet || !descriptionProjet || !budget || !dateSoumission) {
+      setErreur("Tous les champs obligatoires doivent être remplis !");
+      return;
+    }
 
-  const userId = localStorage.getItem("userId");
+    setErreur("");
 
-  const projetSub = {
-    clientNom,
-    clientEmail,
-    clientNumero,
-    titreProjet,
-    descriptionProjet,
-    budget,
-    dateSoumission,
-    userId // 🟢 ici on l'ajoute
+    // 🔹 Récupérer userId depuis localStorage
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      setErreur("Utilisateur non connecté !");
+      return;
+    }
+
+    const projetSub = {
+      titreProjet,
+      descriptionProjet,
+      budget,
+      dateSoumission,
+      userId
+    };
+
+    axios.post("http://localhost:5000/projet/update/add", projetSub)
+      .then(() => {
+        setConfirmationMessage("Projet enregistré avec succès !");
+        setShowConfirmation(true);
+
+        // Réinitialisation
+        setTitreProjet("");
+        setDescriptionProjet("");
+        setBudget("");
+        setDateSoumission(todayString);
+
+        setTimeout(() => {
+          setShowConfirmation(false);
+          navigate("/projetListClient");
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error("Erreur ajout projet :", error);
+        setErreur("Impossible d'enregistrer le projet.");
+      });
   };
-
-  axios.post('http://localhost:5000/projet/update/add', projetSub)
-    .then(() => {
-      setConfirmationMessage('Projet enregistré avec succès !');
-      setShowConfirmation(true);
-
-      // Réinitialisation
-      setClientNom('');
-      setClientEmail('');
-      setClientNumero('');
-      setTitreProjet('');
-      setDescriptionProjet('');
-      setBudget('');
-      setDateSoumission(todayString);
-
-      setTimeout(() => {
-        setShowConfirmation(false);
-        navigate('/projetListClient');
-      }, 2000);
-    })
-    .catch((error) => console.log(error));
-};
-
 
   return (
     <div className={`${styles.container} ${darkMode ? styles.dark : ""}`}>
@@ -86,27 +85,6 @@ const ProjetRegister = () => {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              placeholder="Nom du client"
-              value={clientNom}
-              onChange={(e) => setClientNom(e.target.value)}
-              required
-            />
-            <input
-              type="email"
-              placeholder="Email du client"
-              value={clientEmail}
-              onChange={(e) => setClientEmail(e.target.value)}
-              required
-            />
-            <input
-              type="tel"
-              placeholder="Téléphone du client"
-              value={clientNumero}
-              onChange={(e) => setClientNumero(e.target.value)}
-              required
-            />
-            <input
-              type="text"
               placeholder="Titre du projet"
               value={titreProjet}
               onChange={(e) => setTitreProjet(e.target.value)}
@@ -120,7 +98,7 @@ const ProjetRegister = () => {
             />
             <input
               type="number"
-              placeholder="Budget (€)"
+              placeholder="Budget (FCFA)"
               value={budget}
               onChange={(e) => setBudget(e.target.value)}
               required

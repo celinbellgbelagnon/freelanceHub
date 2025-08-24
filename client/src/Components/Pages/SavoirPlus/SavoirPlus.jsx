@@ -10,6 +10,7 @@ import {
   FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaCheckCircle
 } from "react-icons/fa";
 
+
 const services = [
   { icon: <FaLaptopCode />, title: "Développement Web & Mobile", description: "Nos freelances conçoivent des sites web dynamiques, des applications mobiles modernes, des plateformes e-commerce performantes, et des solutions back-end sécurisées." },
   { icon: <FaPaintBrush />, title: "Design Graphique & UI/UX", description: "De la création de logos aux maquettes interactives, nos graphistes vous accompagnent dans l’identité visuelle de votre projet pour un rendu professionnel et attrayant." },

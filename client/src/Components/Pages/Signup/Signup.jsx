@@ -1,169 +1,219 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
-import axios from 'axios';
+import axios from "axios";
+import { FaUser, FaEnvelope, FaLock, FaPhone, FaBriefcase, FaFileUpload } from "react-icons/fa";
 
 const Signup = () => {
-  const [username, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [telephone, setTelephone] = useState('');
-  const [specialite, setSpecialite] = useState('');
-  const [date, setDate] = useState('');
-  const [profil, setProfil] = useState('');
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [specialite, setSpecialite] = useState("");
+  const [profil, setProfil] = useState("");
   const [cvFile, setCvFile] = useState(null);
+  const [cvError, setCvError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const today = new Date();
-  const todayString = today.toISOString().slice(0, 10);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleCvChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.size > 5 * 1024 * 1024) {
+      setCvError("Le fichier CV ne doit pas dépasser 5 Mo.");
+      setCvFile(null);
+      return;
+    }
+    setCvFile(file);
+    setCvError("");
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
+    setSuccessMsg("");
 
-    // Regex stricte pour emails finissant par des extensions valides
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|fr|org|net|edu|info|io|co|sn|tg|cm|biz)$/i;
-    if (!emailRegex.test(email)) {
-      alert("Adresse e-mail invalide. Elle doit se terminer par .com, .fr, .org, etc.");
+    if (!username || !email || !password || !confirmPassword || !profil) {
+      setErrorMsg("Veuillez remplir tous les champs obligatoires.");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert('Les mots de passe ne correspondent pas.');
+      setErrorMsg("Les mots de passe ne correspondent pas.");
       return;
     }
 
-    if (!username || !email || !password || !profil || !date) {
-      alert("Veuillez remplir tous les champs obligatoires.");
+    if (profil === "freelance" && !cvFile) {
+      setErrorMsg("Le CV est obligatoire pour un profil freelance.");
       return;
     }
 
     const formData = new FormData();
-    formData.append('username', username);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('telephone', telephone);
-    formData.append('specialite', specialite);
-    formData.append('date', date);
-    formData.append('profil', profil);
-    if (cvFile) formData.append('cv_pdf', cvFile);
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("telephone", telephone || "");
+    formData.append("specialite", specialite || "");
+    formData.append("profil", profil);
+    if (profil === "freelance") formData.append("cv", cvFile);
 
-    axios.post('http://localhost:5000/user/signup', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
-    .then(() => {
-      window.location.href = "/login";
-    })
-    .catch((error) => {
-      alert(error.response?.data?.error || "Erreur lors de l'inscription.");
-      console.error(error.response?.data);
-    });
+    try {
+      await axios.post("http://localhost:5000/user/signup", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      setSuccessMsg("✅ Inscription réussie !");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (err) {
+      setErrorMsg(err.response?.data?.message || "Erreur serveur.");
+    }
   };
 
   return (
     <div className={styles.container}>
-      <div className={styles.loginBox}>
-        <form
-          className={styles.left}
-          onSubmit={handleSubmit}
-          encType="multipart/form-data"
-        >
-          <h2>Créer un compte</h2>
-          <p className={styles.p2}>Utilisez votre e-mail pour vous inscrire</p>
-          <div className={styles.inputbox}>
-            <div className={styles.leftbox}>
-              <input
-                type="text"
-                placeholder="Nom d'utilisateur"
-                value={username}
-                onChange={(e) => setUserName(e.target.value)}
-                className={styles.input}
-              />
-              <input
-                type="email"
-                placeholder="E-mail"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={styles.input}
-                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|fr|org|net|edu|info|io|co|sn|tg|cm|biz)$"
-                title="L'adresse doit se terminer par .com, .fr, .org, etc."
-                required
-              />
-              <input
-                type="password"
-                placeholder="Mot de passe"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={styles.input}
-              />
-              <input
-                type="password"
-                placeholder="Confirmer le mot de passe"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className={styles.input}
-              />
-              <input
-                type="tel"
-                placeholder="Téléphone"
-                value={telephone}
-                onChange={(e) => setTelephone(e.target.value)}
-                className={styles.input}
-              />
+      <div className={styles.signupBox}>
+        <form className={styles.formGrid} onSubmit={handleSubmit} encType="multipart/form-data">
+          <h2 className={styles.title}>Créer un compte</h2>
+          <p className={styles.subtitle}>Utilisez votre e-mail pour vous inscrire</p>
+
+          <div className={styles.grid}>
+            {/* Colonne gauche */}
+            <div>
+              <div className={styles.inputGroup}>
+                <FaUser className={styles.inputIcon} />
+                <input
+                  type="text"
+                  placeholder="Nom d'utilisateur"
+                  value={username}
+                  onChange={(e) => setUserName(e.target.value)}
+                  required
+                  className={styles.input}
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <FaEnvelope className={styles.inputIcon} />
+                <input
+                  type="email"
+                  placeholder="E-mail"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className={styles.input}
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <FaLock className={styles.inputIcon} />
+                <input
+                  type="password"
+                  placeholder="Mot de passe"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className={styles.input}
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <FaLock className={styles.inputIcon} />
+                <input
+                  type="password"
+                  placeholder="Confirmer le mot de passe"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  className={styles.input}
+                />
+              </div>
             </div>
-            <div className={styles.rightbox}>
-              <input
-                type="text"
-                placeholder="Spécialité"
-                value={specialite}
-                onChange={(e) => setSpecialite(e.target.value)}
-                className={styles.input}
-              />
-              <input
-                type="date"
-                placeholder="Date d'inscription"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                className={styles.input}
-                max={todayString}
-              />
-              <select
-                value={profil}
-                onChange={(e) => setProfil(e.target.value)}
-                className={styles.input}
-                required
-              >
-                <option value="">Profil</option>
-                <option value="freelance">Freelance</option>
-                <option value="client">Client</option>
-              </select>
+
+            {/* Colonne droite */}
+            <div>
+              <div className={styles.inputGroup}>
+                <FaPhone className={styles.inputIcon} />
+                <input
+                  type="tel"
+                  placeholder="Téléphone"
+                  value={telephone}
+                  onChange={(e) => setTelephone(e.target.value)}
+                  className={styles.input}
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <FaBriefcase className={styles.inputIcon} />
+                <input
+                  type="text"
+                  placeholder="Spécialité"
+                  value={specialite}
+                  onChange={(e) => setSpecialite(e.target.value)}
+                  className={styles.input}
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <FaUser className={styles.inputIcon} />
+                <select
+                  value={profil}
+                  onChange={(e) => setProfil(e.target.value)}
+                  className={styles.selectInput}
+                  required
+                >
+                  <option value="">-- Sélectionnez un profil --</option>
+                  <option value="freelance">Freelance</option>
+                  <option value="client">Client</option>
+                </select>
+              </div>
 
               {profil === "freelance" && (
-                <>
-                  <label className={styles.label}>
-                    Téléversez votre CV (PDF uniquement)
-                  </label>
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    onChange={(e) => setCvFile(e.target.files[0])}
-                    className={styles.input}
-                    required
-                  />
-                </>
-              )}
+  <div className={styles.cvContainer}>
+    <label className={styles.label}>Téléversez votre CV (PDF, max 5 Mo)</label>
+    <div className={styles.fileUploadWrapper}>
+      <button
+        type="button"
+        className={styles.fileUploadBtn}
+        onClick={() => document.getElementById("cvUpload").click()}
+      >
+        <FaFileUpload /> Choisir un fichier
+      </button>
+      <span className={styles.fileName}>
+        {cvFile ? cvFile.name : "Aucun fichier choisi"}
+      </span>
+    </div>
+    <input
+      id="cvUpload"
+      type="file"
+      accept="application/pdf"
+      style={{ display: "none" }}
+      onChange={handleCvChange}
+    />
+    {cvError && <span className={styles.error}>{cvError}</span>}
+  </div>
+)}
+
             </div>
           </div>
-          <button type="submit" className={styles.button}>
+
+          {/* Messages */}
+          {errorMsg && <p className={styles.error}>{errorMsg}</p>}
+          {successMsg && <p className={styles.success}>{successMsg}</p>}
+
+          <button type="submit" className={styles.submitBtn}>
             S'inscrire
           </button>
-        </form>
 
-        <p className={styles.footnote}>
-          Avez-vous déjà un compte ?{" "}
-          <Link to="/login" className={styles.link}>
-            Connectez-vous
-          </Link>
-        </p>
+          <p className={styles.footnote}>
+            Vous avez déjà un compte ?{" "}
+            <Link to="/login" className={styles.link}>
+              Connectez-vous
+            </Link>
+          </p>
+        </form>
       </div>
     </div>
   );
